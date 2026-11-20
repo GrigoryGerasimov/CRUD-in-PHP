@@ -32,6 +32,7 @@ class Router
         $this->postData = $_POST;
         
         parse_str(file_get_contents("php://input"), $output);
+
         $this->updateData = $output;
         
     }
