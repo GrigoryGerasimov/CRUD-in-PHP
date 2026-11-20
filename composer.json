@@ -1,0 +1,11 @@
+{
+	"autoload" : {
+		"psr-4" : {
+			"PHPCRUD\\CRUD\\" : "src"
+		}
+	},
+	"name" : "phpcrud/crud",
+	"require" : {
+		"php" : ">=8.2"
+	}
+}
