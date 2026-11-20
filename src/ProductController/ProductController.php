@@ -18,11 +18,9 @@ class ProductController extends Controller
     {
         try {
 
-            $queryResult = QueryBuilder::insert($this->connection, "products", $postData);
+            $queryResult = QueryBuilder::insert($this->connection, "products", $data);
             
-            $result = mysqli_fetch_all($queryResult, MYSQLI_ASSOC);
-            
-            if ($result) {
+            if ($queryResult) {
                 
                 http_response_code(201);
                 
