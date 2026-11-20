@@ -20,6 +20,12 @@ final class MYSQLController extends DBController
                 
         } catch (\Exception $err) {
             
+            match(true) {
+                str_contains($err->getMessage(), "Access denied") => http_response_code(401),
+                str_contains($err->getMessage(), "Unknown database") => http_response_code(404),
+                default => http_response_code(400)
+            };
+            
             exit($err->getMessage());
             
         }
