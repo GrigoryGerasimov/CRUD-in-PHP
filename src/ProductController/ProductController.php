@@ -68,7 +68,7 @@ class ProductController extends Controller
                 
             } else {
                 
-                http_response_status(404);
+                http_response_code(404);
                 
                 throw new \Exception("No products found");
                 
@@ -76,7 +76,7 @@ class ProductController extends Controller
             
         } catch (\Exception|\Error $err) {
             
-            http_response_status(400);
+            http_response_code(400);
             
             return json_encode([
                 "status" => "failed",
@@ -101,7 +101,6 @@ class ProductController extends Controller
                 return json_encode([
                     "status" => "success",
                     "result" => $data
-                    
                 ]);
             
             } else {
@@ -129,7 +128,33 @@ class ProductController extends Controller
     {
         try {
             
+            $queryResult = QueryBuilder::update($this->connection, "products", $id, $data);
+            
+            if ($queryResult) {
+                
+                http_response_code(200);
+                
+                return json_encode([
+                    "status" => "success",
+                    "result" => "Product with id $id updated"
+                ]);
+
+            } else {
+                
+                http_response_code(400);
+                
+                throw new \Exception("Product with id $id could not be updated");
+                
+            }
+            
         } catch (\Exception|\Error $err) {
+            
+            http_response_code(400);
+            
+            return json_encode([
+                "status" => "failed",
+                "result" => $err->getMessage()
+            ]);
             
         }
     }
@@ -138,7 +163,46 @@ class ProductController extends Controller
     {
         try {
             
+            $productFound= json_decode($this->readOne($id), true)["status"] === "success";
+            
+            if ($productFound) {
+                
+                $queryResult = QueryBuilder::delete($this->connection, "products", $id);
+                
+                if ($queryResult) {
+                    
+                    http_response_code(200);
+                    
+                    return json_encode([
+                        "status" => "success",
+                        "result" => "Product with id $id deleted"
+                        
+                    ]);
+                
+                } else {
+                    
+                    http_response_code(400);
+                    
+                    throw new \Exception("Product with id $id could not be deleted");
+                
+                }
+            
+            } else {
+                
+                http_response_code(404);
+                
+                throw new \Exception("Product with id $id not found");
+                
+            }
+
         } catch (\Exception|\Error $err) {
+            
+            http_response_code(400);
+            
+            return json_encode([
+                "status" => "failed",
+                "result" => $err->getMessage()
+            ]);
             
         }
     }
