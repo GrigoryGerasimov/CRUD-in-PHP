@@ -27,24 +27,19 @@ class QueryBuilder
     {
         if (!empty($data)) {
             
-            foreach($data as $item) {
-                
-                $stmt = mysqli_prepare(
-                    $connection, 
-                    strtoupper("insert into " . "`$DBTable` " . "(`title`, `price`, `description`) " . "VALUES ('?', '?', '?')")
-                    );
-                
-                $title = $item["title"];
-                $price = $item["price"];
-                $description = $item["description"];
-                
-                $stmt->bind_param("is", $title, $price, $description);
-                
-                $stmt->execute();
-                
-                return $stmt->get_result();
-            }
+            $stmt = mysqli_prepare(
+                $connection,
+                strtoupper("insert into " . "`$DBTable` " . "(`title`, `price`, `description`) " . "VALUES (?, ?, ?)")
+                );
             
+            $title = array_key_exists("title", $data) ? $data["title"] : null;
+            $price = array_key_exists("price", $data) ? $data["price"] : null;
+            $description = array_key_exists("description", $data) ? $data["description"] : null;
+            
+            $stmt->bind_param("sis", $title, $price, $description);
+            
+            return $stmt->execute();
+
         }
 
     }
