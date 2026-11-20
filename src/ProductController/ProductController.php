@@ -16,7 +16,39 @@ class ProductController extends Controller
     
     public function create(array $data): string
     {
-        
+        try {
+
+            $queryResult = QueryBuilder::insert($this->connection, "products", $postData);
+            
+            $result = mysqli_fetch_all($queryResult, MYSQLI_ASSOC);
+            
+            if ($result) {
+                
+                http_response_code(201);
+                
+                return json_encode([
+                    "status" => "success",
+                    "result" => "New product item created"
+                ]);
+                
+            } else {
+                
+                http_response_code(400);
+                
+                throw new \Exception("New product item creation failed");
+                
+            }
+            
+        } catch (\Exception|\Error $err) {
+            
+            http_response_code(400);
+            
+            return json_encode([
+                "status" => "failed",
+                "result" => $err->getMessage()
+            ]);
+            
+        }
     }
     
     public function readAll(): string
@@ -27,26 +59,89 @@ class ProductController extends Controller
             
             $data = mysqli_fetch_all($queryResult, MYSQLI_ASSOC);
             
-            var_dump(json_encode($data));
+            if (!empty($data)) {
+                
+                http_response_code(200);
+                
+                return json_encode([
+                    "status" => "success",
+                    "result" => $data
+                ]);
+                
+            } else {
+                
+                http_response_status(404);
+                
+                throw new \Exception("No products found");
+                
+            }
             
-        } catch (\Exception $err) {
+        } catch (\Exception|\Error $err) {
             
+            http_response_status(400);
+            
+            return json_encode([
+                "status" => "failed",
+                "result" => $err->getMessage()
+            ]);
             
         }
     }
     
     public function readOne(string $id): string
     {
+        try {
+            
+            $queryResult = QueryBuilder::selectById($this->connection, "products", $id);
+            
+            $data = mysqli_fetch_all($queryResult, MYSQLI_ASSOC);
+            
+            if (!empty($data)) {
+                
+                http_response_code(200);
+                
+                return json_encode([
+                    "status" => "success",
+                    "result" => $data
+                    
+                ]);
+            
+            } else {
+                
+                http_response_code(404);
+                
+                throw new \Exception("Product with id $id not found");
+            
+            }
+        
+        } catch (\Exception|\Error $err) {
+            
+            http_response_code(400);
+            
+            return json_encode([
+                "status" => "failed",
+                "result" => $err->getMessage()
+            ]);
+            
+        }
         
     }
     
     public function update(string $id, array $data): string
     {
-        
+        try {
+            
+        } catch (\Exception|\Error $err) {
+            
+        }
     }
     
     public function delete(string $id): string
     {
-        
+        try {
+            
+        } catch (\Exception|\Error $err) {
+            
+        }
     }
 }

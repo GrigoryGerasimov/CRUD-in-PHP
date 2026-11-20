@@ -2,16 +2,13 @@
 
 namespace PHPCRUD\CRUD;
 
+
 header("Content-type: application/json");
 
-use PHPCRUD\CRUD\DBController\MYSQLController;
-use PHPCRUD\CRUD\ProductController\ProductController;
+use PHPCRUD\CRUD\Router\Router;
 
 require_once("../vendor/autoload.php");
 
+$router = new Router();
 
-$connection = MYSQLController::getDBInstance()->getConnection();
-
-$productController = new ProductController($connection);
-
-$productController->readAll();
+var_dump($router->route());
