@@ -1,2 +1,2 @@
 # CRUD-in-PHP
-CRUD in native PHP + PHPMyAdmin
+CRUD in native PHP + MySQL
