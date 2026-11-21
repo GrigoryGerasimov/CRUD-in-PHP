@@ -60,7 +60,7 @@ class ProductController extends Controller
             if (!empty($data)) {
                 
                 http_response_code(200);
-                
+
                 return json_encode([
                     "status" => "success",
                     "result" => $data

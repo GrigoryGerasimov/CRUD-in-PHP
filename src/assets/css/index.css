@@ -1,0 +1,156 @@
+body {
+	margin: 50px;
+}
+
+table {
+	margin-bottom: 20px;
+	border-radius: 5px;
+	border-style: hidden;
+	box-shadow: 0 0 0 1px #f43614;
+}
+
+thead {
+	background-color: #f43614;
+}
+
+tbody {
+	background-color: #f36e56;
+}
+
+th, td {
+	transition: 1s;
+}
+
+th, td, button {
+	padding: 10px;
+	text-align: center;
+	color: #FFFFFF;
+}
+
+td:hover {
+	background-color: #FFFFFF;
+	color: #f36e56;
+}
+
+.view, .back, .edit, .delete {
+	background-color: #FFFFFF;
+}
+
+.view:hover, .back:hover, .edit:hover, .delete:hover{
+	color: #FFFFFF;
+}
+
+.view, .back {
+	border: 1px solid orange;
+	color: orange;
+}
+
+.view:hover, .back:hover {
+	background-color: orange;
+}
+
+.edit {
+	border: 1px solid #6a6af2;
+}
+
+.edit:hover {
+	background-color: #6a6af2;
+}
+
+.delete {
+	border: 1px solid red;
+}
+
+.delete:hover {
+	background-color: red;	
+}
+
+.view > a, .back > a {
+	color: orange;
+}
+
+.edit > a {
+	color: #6a6af2;
+}
+
+.delete > a {
+	color: red;
+}
+
+.view > a, .back > a, .edit > a, .delete > a {
+	text-decoration: none;
+}
+
+.view > a:hover, .back > a:hover, .edit > a:hover, .delete > a:hover {
+	color: #FFFFFF;
+	text-decoration: none;
+}
+
+.back-form-link {
+	border: none;
+	text-decoration: none;
+	padding: 10px;
+	text-align: center;
+	border-radius: 10px;
+	transition: 1s;
+}
+
+.back-form-link:hover {
+	border-radius: 5px;
+}
+
+h3, div{
+	margin: 10px;
+	padding: 5px;
+}
+
+h3 {
+	color: #f43614;
+}
+
+div {
+	color: #f36e56;
+	display: flex;
+	align-items: center;
+}
+
+form {
+	border: 1px solid #f43614;
+	border-radius: 5px;
+}
+
+label {
+	display: flex;
+	align-items: center;
+}
+
+input, textarea {
+	border: none;
+	outline: none;
+	resize: none;
+	display: flex;
+	align-items: center;
+	text-align-last: center;
+	padding: 10px;
+	font-family: Arial, sans-serif;
+}
+
+button {
+	margin-right: 15px;
+	border: 1px solid #f43614;
+	border-radius: 10px;
+	background-color: #f43614;
+	transition: 1s;
+}
+
+button:hover {
+	border-radius: 5px;
+	background-color: transparent;
+	color: #f43614;
+	cursor: pointer;
+}
+
+button:active {
+	background-color: #f36e56;
+	color: #FFFFFF;
+}
