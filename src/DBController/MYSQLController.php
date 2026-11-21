@@ -14,7 +14,7 @@ final class MYSQLController extends DBController
     {
         try {
             
-            $this->mysqlConnection = mysqli_connect("localhost", "root", "root", "crud", "8889");
+            $this->mysqlConnection = mysqli_connect("localhost", "root", "root", "crud", "8889", "/Applications/MAMP/tmp/mysql/mysql.sock");
             
             if ($this->mysqlConnection->connect_error) throw new \Exception($this->mysqlConnection->connect_error);
                 

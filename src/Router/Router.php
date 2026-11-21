@@ -8,7 +8,7 @@ use PHPCRUD\CRUD\ProductController\ProductController;
 
 class Router
 {
-    private ?string $path = null;
+    private ?array $path = null;
     
     private ?string $method = null;
     
@@ -25,7 +25,7 @@ class Router
         
         $this->controller = new ProductController($connection);
         
-        $this->path = !empty($_GET) ? $_GET["q"] : null;
+        $this->path = $_GET;
         
         $this->method = $_SERVER["REQUEST_METHOD"];
         
@@ -37,11 +37,11 @@ class Router
         
     }
     
-    public function getPath(): int|string|null
+    public function getApiPath(): int|string|null
     {
-        if (isset ($this->path)) {
+        if (!empty($this->path)) {
             
-            $splitPath = explode("/", $this->path);
+            $splitPath = explode("/", $this->path["q"]);
             
             return $splitPath[count($splitPath) - 1];
         
@@ -55,16 +55,21 @@ class Router
         
     }
     
+    public function getController(): ?ProductController
+    {
+        return $this->controller;
+    }
+    
     public function route()
     {
         try {
-            
+
             $result = match($this->getMethod()) {
                 
-                "GET" => (int) $this->getPath() ? $this->controller->readOne($this->getPath()) : $this->controller->readAll(),
-                "POST" => $this->getPath() === "products" ? $this->controller->create($this->postData) : throw new \Exception("To create a new product please return to product list"),
-                "PATCH" => (int) $this->getPath() ? $this->controller->update($this->getPath(), $this->updateData) : throw new \Exception("Please select a product to update"),
-                "DELETE" => (int) $this->getPath() ? $this->controller->delete($this->getPath()) : throw new \Exception("Please select a product to delete")
+                "GET" => (int) $this->getApiPath() ? $this->controller->readOne($this->getApiPath()) : $this->controller->readAll(),
+                "POST" => $this->getApiPath() === "products" ? $this->controller->create($this->postData) : throw new \Exception("Please return to products list to create a new product"),
+                "PATCH" => (int) $this->getApiPath() ? $this->controller->update($this->getApiPath(), $this->updateData) : throw new \Exception("Please select a product to update"),
+                "DELETE" => (int) $this->getApiPath() ? $this->controller->delete($this->getApiPath()) : throw new \Exception("Please select a product to delete")
                 
             };
             
